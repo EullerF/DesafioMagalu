@@ -13,7 +13,7 @@ A paginação de todos os clientes adota um limite de 5 por página.
 A paginação de todos os produtos adota um limite de 4 por página.
 
 ## Como testar
-Com o node instalado em sua máquina, após clonar o repositório execute o seguinte comando para instalação das dependências
+Com o node instalado em sua máquina, após clonar o repositório GIT execute o seguinte comando para instalação das dependências:
 `npm install express nodemon mongoose`
 
 Para facilitar os testes foi utilizado o Postman
