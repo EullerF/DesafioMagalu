@@ -11,7 +11,6 @@ app.use(
 
 app.use(express.json())
 
-// Rotas da API
 const clienteRoutes = require('./routes/clienteRoutes')
 app.use('/cliente', clienteRoutes)
 
@@ -19,7 +18,6 @@ const produtosRoutes = require('./routes/produtosRoutes')
 app.use('/produto', produtosRoutes)
 
 
-// Porta
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 mongoose.connect(

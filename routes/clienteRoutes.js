@@ -4,7 +4,6 @@ const clienteController = require('../controller/clienteController')
 
 const URL_PRODUTO = process.env.URL_PRODUTO
 
-
 router.post('/' , clienteController.create)
 router.get('/page/:page' , clienteController.getAll)
 router.get('/:id' , clienteController.getOne)

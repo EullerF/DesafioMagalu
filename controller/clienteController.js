@@ -5,39 +5,38 @@ const Cliente = require('../models/Clientes')
 const URL_PRODUTO = process.env.URL_PRODUTO
 
 module.exports = class clienteController {
-
-    //Create 
+    // Create Cliente
     static async create(req, res) {
         const {name, email} = req.body
  
-     if(!name){
-         res.status(422).json({eror:'Insira o nome'})
+        if(!name){
+            res.status(422).json({eror:'Insira o nome'})
          return
-     }
-     if(!email){
-         res.status(422).json({eror:'Insira o e-mail'})
+         }
+        if(!email){
+            res.status(422).json({eror:'Insira o e-mail'})
          return
-     }
+         }
  
-    const cliente = {
-     name,
-     email
-    }
-    // Validando se o e-mail está atrelado a outro Cliente
-    const clientes = await Cliente.findOne({email: email})
-    if(!clientes){  
-        try{
-         await Cliente.create(cliente)
-        res.status(201).json({message: 'Cliente criado com sucesso'})
+        const cliente = {
+        name,
+        email
+        }
+        const clientes = await Cliente.findOne({email: email})
+        if(!clientes){  
+         try{
+            await Cliente.create(cliente)
+            res.status(201).json({message: 'Cliente criado com sucesso'})
  
-        } catch (error){
-        res.status(500).json({error: error})
+            } catch (error){
+            res.status(500).json({error: error})
+            }
+        }
+        else{
+        res.status(422).json({eror:'E-mail já cadastrado'})
         }
     }
-    else{
-        res.status(422).json({eror:'E-mail já cadastrado'})
-    }
-    }
+
     // Ler apenas o Cliente desejado
     static async getOne(req, res) {
         const id = req.params.id
@@ -54,6 +53,7 @@ module.exports = class clienteController {
                res.status(500).json({error: error})
            }
         }
+
     // Ler todos os clientes com páginação
     static async getAll(req, res) {
         const pagina = req.params.page || 1;
@@ -68,8 +68,8 @@ module.exports = class clienteController {
            }
         }
 
-       // Update
-        static async update(req, res) {
+    // Update Cliente
+    static async update(req, res) {
         const id = req.params.id
         const {name, email} = req.body
         const cliente = {
@@ -114,6 +114,7 @@ module.exports = class clienteController {
              res.status(500).json({error: error})
            }
     }
+
     // Adicionando produtos a lista de favoritos
     static async addList(req, res) { 
     const id = req.params.id
@@ -136,8 +137,6 @@ module.exports = class clienteController {
             }
         const favoritos = [...new Set(cliente.favoritos)]
         favoritos.push(idP)
-
-        // Garantindo que o produto favorito não seja duplicado antes de atualizar a lista
         const favoritosUnico = [...new Set(favoritos)]
         const atualizarCliente = await Cliente.updateOne({_id: id},{$set:{favoritos:favoritosUnico}})
         if(atualizarCliente.matchedCount===0){
@@ -150,7 +149,8 @@ module.exports = class clienteController {
            res.status(500).json({error: error})
             }
     }
-    // Listar Favoritos
+
+    // Listando Favoritos do Cliente
     static async getList(req, res) {
         
     const id = req.params.id
@@ -170,14 +170,14 @@ module.exports = class clienteController {
         let arrayFavoritos = []
 
             var indice = 0;
-            while (indice < 3) {
+            while (indice < limite) {
             if(salto>=tamanho)
             {
                 break;
             }
             
             const produto_favorito = await Produto.findOne({_id: idFavoritos[salto]})
-            //Validando se há Review
+            
             if(!produto_favorito.reviewScore){
             arrayFavoritos.push(
                 {title:produto_favorito.title,
