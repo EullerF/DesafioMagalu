@@ -14,7 +14,12 @@ A paginação de todos os produtos adota um limite de 4 por página.
 
 ## Como testar
 Com o node instalado em sua máquina, após clonar o repositório GIT execute o seguinte comando para instalação das dependências:
+
 `npm install express nodemon mongoose`
+
+Após a instalação das dependências basta executar a Api com o comando:
+
+`npm start`
 
 Para facilitar os testes foi utilizado o Postman
 
